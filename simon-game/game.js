@@ -96,5 +96,6 @@ $("#level-title").on("click", function() {
         level++
         $("#level-title").text("Level " + level)
         go()
+        toggler = true
     }
 })
