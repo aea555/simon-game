@@ -2,6 +2,7 @@ var colors = ["red", "green", "yellow", "blue"]
 var gamePattern = []
 var userClickPattern = []
 var level = 0
+let toggler = false
 
 let showLevel = () => {
     $("#level-title").text("Level " + level)
@@ -28,6 +29,7 @@ let reset = () => {
         playAudio("wrong")
         $(".refresh-button").removeClass("undisplayed")
         $(".btn").addClass("undisplayed")
+        toggler = false
     }, 200)
 }
 
@@ -64,12 +66,12 @@ let check = () => {
 }
 
 let checkPattern = (a, b) => {
-        return Array.isArray(a) &&
-            Array.isArray(b) &&
-            a.length === b.length &&
-            a.every((val, index) => val === b[index]);
-    }
-    ////////////////////////////////////////////////////////////////////////////////////
+    return Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => val === b[index]);
+}
+
 let go = () => {
     createStep()
     $(".btn").click(function() {
@@ -80,7 +82,19 @@ let go = () => {
 
 $(document).keypress(function() {
     $("body").removeClass("game-over")
-    level++
-    $("#level-title").text("Level " + level)
-    go()
+    if (toggler === false) {
+        level++
+        $("#level-title").text("Level " + level)
+        go()
+        toggler = true
+    }
+})
+
+$("#level-title").on("click", function() {
+    $("body").removeClass("game-over")
+    if (toggler === false) {
+        level++
+        $("#level-title").text("Level " + level)
+        go()
+    }
 })
